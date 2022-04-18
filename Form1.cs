@@ -145,6 +145,8 @@ namespace CWG
             Socket remote = (Socket)iar.AsyncState;
             int sent = remote.EndSend(iar);
         }
+
+        //this function will work on thread
         void ReceiveData()
         {
             int recv; //length of received data
@@ -161,7 +163,7 @@ namespace CWG
                 //parse the incoming messages, thus we can determine what to do according to definitions
                 String[] split = stringData.Split(new char[] { ':' },StringSplitOptions.None);
 
-                //kullanıcı konum bilgisi gönderdiyse listeye al
+                //append the received location info to list
                 if (split[0] == "LOCATION")
                 {
                     rivalsFlagData[playerDataindex, 0] = Convert.ToInt32(split[1]);
@@ -183,7 +185,7 @@ namespace CWG
                 {
                     gameInfo.Items.Add("FOUND:RIVAL Found YOUR flag!");
 
-                    int r_idx = (player == 0) ? 1 : 0;//düşman bayrağını seninkinin üstüne koy
+                    int r_idx = (player == 0) ? 1 : 0;//place the rival flag over yours
                     int receivedIdx = Convert.ToInt32(split[1]);
 
                     g.DrawImage(imgList[r_idx+2],
@@ -222,11 +224,11 @@ namespace CWG
                     results.Items.Add("<rival user>:" + stringData);
                 }
             }
-            //kapatma mesajını karşı tarafa da gönder o da kapansın
-            stringData = "bye";
-            byte[] message = Encoding.ASCII.GetBytes(stringData);
-            client.Send(message);
+            //if program reaches here, this means
+            //connection have ended by client
+            //now we are exiting
             client.Close();
+            client = null;//cause error on exit function if not null!!<<look again
             results.Items.Add("Connection stopped");
             return;
         }
@@ -371,6 +373,18 @@ namespace CWG
             client.BeginSend(message, 0, message.Length, 0,
             new AsyncCallback(SendData), client);
 
+        }
+
+        //close the sockets when exit, otherwise send and receive threads will stay still.
+        private void deneme_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            userInformText.Text="Closing Sockets..";
+            if (client!=null)
+            {
+                byte[] message = Encoding.ASCII.GetBytes("bye");
+                client.Send(message);
+                client.Close();
+            }
         }
     }
 }

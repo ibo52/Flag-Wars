@@ -142,7 +142,7 @@
             this.userInformText.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.userInformText.Location = new System.Drawing.Point(265, 26);
             this.userInformText.Name = "userInformText";
-            this.userInformText.Size = new System.Drawing.Size(505, 24);
+            this.userInformText.Size = new System.Drawing.Size(155, 24);
             this.userInformText.TabIndex = 10;
             this.userInformText.Text = "Flag War Game";
             // 
@@ -166,6 +166,7 @@
             this.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.Name = "deneme";
             this.Text = "Form1";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.deneme_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.warMap)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
