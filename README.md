@@ -1,4 +1,5 @@
 # Flag-Wars
-a simple windows forms application to express IPC communications over network. 
+a simple windows forms application to to Understand
+IPC communications over network. 
 
 
