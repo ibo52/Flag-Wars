@@ -36,6 +36,14 @@ namespace CWG
 
         Bitmap[] imgList; //flags and other images list;
 
+        WMPLib.WindowsMediaPlayer musicBox;
+        WMPLib.WindowsMediaPlayer hitSound;
+        WMPLib.WindowsMediaPlayer enemyHitSound;
+
+        string mainMusic="sound\\warTheme.mp3";
+        string youHit = "sound\\youHit.m4a";
+        string enemyHit = "sound\\enemyHit.m4a";
+
         public deneme()
         {
             InitializeComponent();
@@ -59,6 +67,19 @@ namespace CWG
             imgList[1] = BLUE_FLAG;
             imgList[2] = RED_OWNED;
             imgList[3] = BLUE_OWNED;
+
+            hitSound = new WMPLib.WindowsMediaPlayer();
+            hitSound.URL = youHit;
+            hitSound.controls.stop();
+
+            enemyHitSound = new WMPLib.WindowsMediaPlayer();
+            enemyHitSound.URL = enemyHit;
+            enemyHitSound.controls.stop();
+
+            musicBox = new WMPLib.WindowsMediaPlayer();
+            musicBox.URL = mainMusic;
+            musicBox.settings.volume = 75;
+            musicBox.controls.stop();
         }
         //server settings
         void ButtonListenOnClick(object obj, EventArgs ea)
@@ -72,6 +93,7 @@ namespace CWG
             results.Items.Add(iep.Address+":"+iep.Port+" "+iep.AddressFamily);
             results.Items.Add("*-*setted as server.*-*");
             newsock.BeginAccept(new AsyncCallback(AcceptConn), newsock);
+            listen.Enabled = false;//disable listen button cause you are server now.
         }
 
         //client connection settings
@@ -100,6 +122,12 @@ namespace CWG
                 newText.Clear();
                 client.BeginSend(message, 0, message.Length, 0,
                 new AsyncCallback(SendData), client);
+
+                if (newText.Text == "bye")
+                {
+                    client.Close();
+                    client = null;
+                }
             }
         }
         void AcceptConn(IAsyncResult iar)
@@ -197,6 +225,7 @@ namespace CWG
                     yourFlagData[incomingIdx,0] = -100;
                     yourFlagData[incomingIdx, 1] = -100;
 
+                    enemyHitSound.controls.play();
                 }
                 //inform receives that we can make our move now
                 else if (split[0]== "YOURTURN")
@@ -228,6 +257,7 @@ namespace CWG
             //connection have ended by client
             //now we are exiting
             client.Close();
+            musicBox.controls.stop();
             client = null;//cause error on exit function if not null!!<<look again
             results.Items.Add("Connection stopped");
             return;
@@ -316,7 +346,7 @@ namespace CWG
                             flagX - 20, flagY - 50, 40, 50);
 
                         rivalsRemainingFlags--;
-
+                        hitSound.controls.play();
                         //send information to the client
                         //Thread.Sleep(300);
                         byte[] locationMsg = Encoding.ASCII.GetBytes("FOUND:" + i);
@@ -334,6 +364,7 @@ namespace CWG
         //when user connected; start this as initial
         void placeFlags()
         {
+            musicBox.controls.play();
             int numberToPlace = 5;
             userInformText.ForeColor = Color.Green;
 
@@ -378,6 +409,7 @@ namespace CWG
         //close the sockets when exit, otherwise send and receive threads will stay still.
         private void deneme_FormClosing(object sender, FormClosingEventArgs e)
         {
+            musicBox.controls.stop();
             userInformText.Text="Closing Sockets..";
             if (client!=null)
             {

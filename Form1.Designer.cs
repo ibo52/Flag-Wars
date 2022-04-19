@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(deneme));
             this.connect = new System.Windows.Forms.Button();
             this.listen = new System.Windows.Forms.Button();
             this.results = new System.Windows.Forms.ListBox();
@@ -39,7 +40,9 @@
             this.newText = new System.Windows.Forms.TextBox();
             this.attack = new System.Windows.Forms.Button();
             this.userInformText = new System.Windows.Forms.Label();
+            this.axWindowsMediaPlayer1 = new AxWMPLib.AxWindowsMediaPlayer();
             ((System.ComponentModel.ISupportInitialize)(this.warMap)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer1)).BeginInit();
             this.SuspendLayout();
             // 
             // connect
@@ -146,12 +149,23 @@
             this.userInformText.TabIndex = 10;
             this.userInformText.Text = "Flag War Game";
             // 
+            // axWindowsMediaPlayer1
+            // 
+            this.axWindowsMediaPlayer1.Enabled = true;
+            this.axWindowsMediaPlayer1.Location = new System.Drawing.Point(15, -3);
+            this.axWindowsMediaPlayer1.Name = "axWindowsMediaPlayer1";
+            this.axWindowsMediaPlayer1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axWindowsMediaPlayer1.OcxState")));
+            this.axWindowsMediaPlayer1.Size = new System.Drawing.Size(75, 23);
+            this.axWindowsMediaPlayer1.TabIndex = 11;
+            this.axWindowsMediaPlayer1.Visible = false;
+            // 
             // deneme
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(907, 450);
+            this.Controls.Add(this.axWindowsMediaPlayer1);
             this.Controls.Add(this.userInformText);
             this.Controls.Add(this.attack);
             this.Controls.Add(this.newText);
@@ -168,6 +182,7 @@
             this.Text = "Form1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.deneme_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.warMap)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -186,6 +201,7 @@
         private System.Windows.Forms.TextBox newText;
         private System.Windows.Forms.Button attack;
         private System.Windows.Forms.Label userInformText;
+        private AxWMPLib.AxWindowsMediaPlayer axWindowsMediaPlayer1;
     }
 }
 
