@@ -38,7 +38,7 @@
             this.sendit = new System.Windows.Forms.Button();
             this.warMap = new System.Windows.Forms.PictureBox();
             this.newText = new System.Windows.Forms.TextBox();
-            this.attack = new System.Windows.Forms.Button();
+            this.musicCtrl = new System.Windows.Forms.Button();
             this.userInformText = new System.Windows.Forms.Label();
             this.axWindowsMediaPlayer1 = new AxWMPLib.AxWindowsMediaPlayer();
             ((System.ComponentModel.ISupportInitialize)(this.warMap)).BeginInit();
@@ -129,14 +129,15 @@
             this.newText.Size = new System.Drawing.Size(144, 20);
             this.newText.TabIndex = 8;
             // 
-            // attack
+            // musicCtrl
             // 
-            this.attack.Location = new System.Drawing.Point(820, 40);
-            this.attack.Name = "attack";
-            this.attack.Size = new System.Drawing.Size(75, 23);
-            this.attack.TabIndex = 9;
-            this.attack.Text = "Attack!";
-            this.attack.UseVisualStyleBackColor = true;
+            this.musicCtrl.Location = new System.Drawing.Point(807, 12);
+            this.musicCtrl.Name = "musicCtrl";
+            this.musicCtrl.Size = new System.Drawing.Size(91, 23);
+            this.musicCtrl.TabIndex = 9;
+            this.musicCtrl.Text = "stop the music";
+            this.musicCtrl.UseVisualStyleBackColor = true;
+            this.musicCtrl.Click += new System.EventHandler(this.musicCtrl_Click);
             // 
             // userInformText
             // 
@@ -167,7 +168,7 @@
             this.ClientSize = new System.Drawing.Size(907, 450);
             this.Controls.Add(this.axWindowsMediaPlayer1);
             this.Controls.Add(this.userInformText);
-            this.Controls.Add(this.attack);
+            this.Controls.Add(this.musicCtrl);
             this.Controls.Add(this.newText);
             this.Controls.Add(this.warMap);
             this.Controls.Add(this.sendit);
@@ -199,7 +200,7 @@
         private System.Windows.Forms.Button sendit;
         private System.Windows.Forms.PictureBox warMap;
         private System.Windows.Forms.TextBox newText;
-        private System.Windows.Forms.Button attack;
+        private System.Windows.Forms.Button musicCtrl;
         private System.Windows.Forms.Label userInformText;
         private AxWMPLib.AxWindowsMediaPlayer axWindowsMediaPlayer1;
     }

@@ -100,6 +100,8 @@ namespace CWG
         void ButtonConnectOnClick(object obj, EventArgs ea)
         {
             results.Items.Add("Connecting...");
+            connect.Enabled = false;
+
             client = new Socket(AddressFamily.InterNetwork, SocketType.Stream,
             ProtocolType.Tcp);
             IPEndPoint iep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 9050);
@@ -166,6 +168,7 @@ namespace CWG
             catch (SocketException)
             {
                 results.Items.Add("Error connecting");
+                connect.Enabled = true;
             }
         }
         void SendData(IAsyncResult iar)
@@ -256,9 +259,11 @@ namespace CWG
             //if program reaches here, this means
             //connection have ended by client
             //now we are exiting
-            client.Close();
-            musicBox.controls.stop();
-            client = null;//cause error on exit function if not null!!<<look again
+            client.Close();         //close sockets to end communication 
+            musicBox.controls.stop();//; 
+            connect.Enabled = true;//;
+
+            client = null;//cause error raises on exit function if not null!!<<look again
             results.Items.Add("Connection stopped");
             return;
         }
@@ -416,6 +421,21 @@ namespace CWG
                 byte[] message = Encoding.ASCII.GetBytes("bye");
                 client.Send(message);
                 client.Close();
+            }
+        }
+
+        private void musicCtrl_Click(object sender, EventArgs e)
+        {
+            //look this part again
+            if (musicBox.playState==WMPLib.WMPPlayState.wmppsPlaying)
+            {
+                musicBox.controls.stop();
+                musicCtrl.Text = "play the music";
+            }
+            else
+            {
+                musicBox.controls.play();
+                musicCtrl.Text = "stop the music";
             }
         }
     }
